@@ -14,6 +14,7 @@ public class GameManeger : MonoBehaviour
     }
     private void Awake()
     {
+        //Qunado o jogo começar
         Fila = new Queue<GameObject>();
         if(Singloton == null)
         {
