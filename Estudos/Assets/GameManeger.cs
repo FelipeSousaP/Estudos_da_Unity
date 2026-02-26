@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class GameManeger : MonoBehaviour
 {
-    public Queue<GameObject> Fila;
+    public Queue<GameObject> Fila = new Queue<GameObject>();
     static GameManeger Singloton;
-    private GameObject BalaSalvas;
     // Os dois devem ser estaticos
+    #region Singloton
+    public static GameManeger Instance
+    {
+        get { return Singloton; }
+    }
     private void Awake()
     {
         Fila = new Queue<GameObject>();
@@ -15,24 +19,20 @@ public class GameManeger : MonoBehaviour
         {
             Singloton = this;
         }
+        else { Destroy(gameObject); }
     }
-    public static GameManeger Instance
-    {
-        get
-        {
-            return Singloton;
-        }
-    }
+    #endregion 
 
     public void SetQueue(GameObject _balas)
     {
-        BalaSalvas = _balas;
-        Fila.Enqueue(BalaSalvas);
+        //caso a fila não exista
+        if(Fila == null) {Fila = new Queue<GameObject>(); }
+        Fila.Enqueue(_balas);
     }
 
     public GameObject GetBullet()
     {
-        Fila.Dequeue(); // remover da fila
-        return BalaSalvas; //returnar bala
+        GameObject B = Fila.Dequeue(); // remover da fila
+        return B; //returnar bala
     }
 }
